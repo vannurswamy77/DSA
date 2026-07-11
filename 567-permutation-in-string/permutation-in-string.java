@@ -5,23 +5,23 @@ class Solution {
         if(n>m){
             return false;
         }
-        int freq[]=new int[26];
-        int curr[]=new int[26];
+        char freq[]=new char[26];
+        char curr[]=new char[26];
         for(int i=0;i<n;i++){
             freq[s1.charAt(i)-'a']++;
             curr[s2.charAt(i)-'a']++;
         }
-        if(Arrays.equals(freq,curr)){
-            return true;
-        }
-        int left=0;
-        for(int i=n;i<m;i++){
-            curr[s2.charAt(left)-'a']--;
-            curr[s2.charAt(i)-'a']++;
-            left++;
-            if(Arrays.equals(freq,curr)){
+        if(Arrays.equals(curr,freq)){
                 return true;
             }
+        int left=0;
+        for(int right=n;right<m;right++){
+            curr[s2.charAt(left)-'a']--;
+            curr[s2.charAt(right)-'a']++;
+            if(Arrays.equals(curr,freq)){
+                return true;
+            }
+            left++;
         }
         return false;
     }
