@@ -5,8 +5,9 @@ class Solution {
         for(int i=1;i<nums.length;i++){
             if(majority==0){
                 element=nums[i];
+                majority++;
             }
-            if(element ==nums[i]){
+            else if(element ==nums[i]){
                 majority++;
             }else{
                 majority--;
