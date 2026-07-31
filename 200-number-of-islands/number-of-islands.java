@@ -1,53 +1,30 @@
 class Solution {
     public int numIslands(char[][] grid) {
-        int r=grid.length;
-        int c=grid[0].length;
+        int r=grid.length,c=grid[0].length;
+        int visted[][]=new int[r][c];
         int count=0;
-        int[][] vis=new int[r][c];
         for(int i=0;i<r;i++){
             for(int j=0;j<c;j++){
-                if(vis[i][j]==0 && grid[i][j]=='1'){
+                if(grid[i][j]=='1' && visted[i][j]==0){
+                    dfs(grid,visted,i,j);
                     count++;
-                    dfs(grid,i,j,vis);
                 }
             }
         }
         return count;
     }
-    public void dfs(char[][] grid,int row,int col,int vis[][]){
-        int r=grid.length;
-        int c=grid[0].length;
-        Queue<Node> q=new LinkedList<>();
-        q.add(new Node(row,col));
-        vis[row][col]=1;
-        while(!q.isEmpty()) {
-            Node curr = q.remove();
-            int ro = curr.row;
-            int co = curr.col;
-            if(ro - 1 >= 0 && vis[ro - 1][co] == 0 && grid[ro - 1][co] == '1') {
-                vis[ro - 1][co] = 1;
-                q.add(new Node(ro - 1, co));
-            }
-            if(ro + 1 < r && vis[ro + 1][co] == 0 && grid[ro + 1][co] == '1') {
-                vis[ro + 1][co] = 1;
-                q.add(new Node(ro + 1, co));
-            }
-            if(co - 1 >= 0 && vis[ro][co - 1] == 0 && grid[ro][co - 1] == '1') {
-                vis[ro][co - 1] = 1;
-                q.add(new Node(ro, co - 1));
-            }
-            if(co + 1 < c && vis[ro][co + 1] == 0 && grid[ro][co + 1] == '1') {
-                vis[ro][co + 1] = 1;
-                q.add(new Node(ro, co + 1));
+    public void dfs(char[][] grid,int[][] visted,int r,int c){
+        visted[r][c]=1;
+        int[] delr={-1,1,0,0};
+        int[] delc={0,0,-1,1};
+        for(int i=0;i<4;i++){
+            int nrow=r+delr[i];
+            int ncol=c+delc[i];
+            if(nrow>=0 && nrow<grid.length && ncol>=0 && ncol<grid[0].length){
+                if(grid[nrow][ncol]=='1' && visted[nrow][ncol]==0){
+                    dfs(grid,visted,nrow,ncol);
+                }
             }
         }
-    }
-}
-class Node{
-    int row;
-    int col;
-    Node(int row,int col){
-        this.row=row;
-        this.col=col;
     }
 }
